@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package javafxthreads;
 
 import javafx.application.Application;
@@ -15,19 +14,20 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import Interface.JuegoLaberinto;
+import Interface.PrincipalWindow;
 
 /**
  *
  * @author root
  */
 public class JavaFXThreads {
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Application.launch(JuegoLaberinto.class, args);
+        Application.launch(PrincipalWindow.class, args);
 
     }
-    
+
 }

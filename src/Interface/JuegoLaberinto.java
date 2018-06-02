@@ -8,6 +8,7 @@ import Domain.ProRunning;
 
 import Domain.SynchronizedBuffer;
 import Utility.Variables;
+import java.awt.Insets;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.BufferOverflowException;
@@ -16,14 +17,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -40,6 +51,10 @@ public class JuegoLaberinto extends Application implements Runnable {
     private Player player;
     private ProRunning rc;
     private SynchronizedBuffer sharedLocation;
+    private Button btnPause, btnSelect, btnStart;
+    
+    
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -60,8 +75,29 @@ public class JuegoLaberinto extends Application implements Runnable {
     public void init(Stage primaryStage) {
         try {
             this.pane = new Pane();
-            this.scene = new Scene(this.pane, 1200, 700);
+            this.scene = new Scene(this.pane, 1400, 700);
             this.canvas = new Canvas(1200, 700);
+            
+            
+            
+            Image imagePause = new Image("/assets/pause.png");
+            ImageView imaPause = new ImageView(imagePause);
+//            this.btnPause = new Button("Pause",imaPause);
+            this.btnPause = new Button("Pause");
+            this.btnPause.relocate(1250, 200);
+            this.btnPause.setMinSize(100, 50);
+            this.pane.getChildren().addAll(this.btnPause, imaPause);
+
+            this.btnSelect = new Button("Select");
+            this.btnSelect.relocate(1250, 300);
+            this.btnSelect.setMinSize(100, 50);
+            this.pane.getChildren().add(this.btnSelect);
+
+            this.btnStart = new Button("Start");
+            this.btnStart.relocate(1250, 400);
+            this.btnStart.setMinSize(100, 50);
+            this.pane.getChildren().add(this.btnStart);
+//        this.btnPause.setOnAction(buttonAction);
 
 //        this.thread = new Thread(this);
 //        this.thread.start();
@@ -111,7 +147,7 @@ public class JuegoLaberinto extends Application implements Runnable {
         int variable = 0;
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, 800, 600);
-         gc.clearRect(0, 0, Variables.WIDTH, Variables.HEIGHT);
+        gc.clearRect(0, 0, Variables.WIDTH, Variables.HEIGHT);
         for (int i = 0; i < laberinto.matriz.length; i++) {
             for (int j = 0; j < laberinto.matriz[0].length; j++) {
                 if (laberinto.matriz[i][j].getEstado() == 0) {

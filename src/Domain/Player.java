@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 
 /**
  *
- * @author Jesus
+ * @author Johanna
  */
 public class Player {
     public Image image;
@@ -80,5 +80,20 @@ public class Player {
     
     void draw(GraphicsContext gc){
         gc.drawImage(image, x, y, 40, 40);
+    }
+    
+    void movimiento(int aux){
+        if(aux==1){
+            this.x=x+50;
+        }
+        else if(aux==2){
+            this.y=y+50;
+        }
+        else if(aux==3){
+            this.y=y-50;
+        }
+        else if(aux==4){
+            this.x=x-50;
+        }
     }
 }

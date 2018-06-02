@@ -5,12 +5,15 @@
  */
 package Domain;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Jesus
  */
 public class Laberinto {
-    public Bloque[][] matriz;
+   public Bloque[][] matriz;
     private Bloque pared;
     private Bloque camino;
     Mapa mapa;
@@ -36,28 +39,20 @@ public class Laberinto {
 //        }
     }
     
-//    public void llennarMatriz(){
-//        for(int i=0;i<matriz.length;i++){
-//            for(int j=0;j<matriz[0].length;j++){
-//                if(i==3){
-//                    matriz[i][j]=new Bloque(1);
-//                    matriz[i][j].setX(j*50);
-//                    matriz[i][j].setY(i*50);
-//                }
-//                else{
-//                    matriz[i][j]=new Bloque(0);
-//                    matriz[i][j].setX(j*50);
-//                    matriz[i][j].setY(i*50);
-//                }
-////                System.out.println(matriz[i][j].getX());
-//            }
-//        }
-////        for(int m=0;m<matriz.length;m++){
-////            matriz[3][m]=camino;
-////            matriz[3][m].setX(m*50);
-////            matriz[3][m].setY(3*50);
-////        }
-//    }           
+    public void pintarMatriz(GraphicsContext gc){
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[0].length;j++){
+                if(matriz[i][j].getEstado()==0){
+                    gc.setFill(Color.BLACK);
+                    gc.fillRect(50*j, 50*i, 50, 50);
+                }
+                else if(matriz[i][j].getEstado()==1){
+                    gc.setFill(Color.WHITE);
+                    gc.fillRect(50*j, 50*i, 50, 50);
+                }
+            }
+        }
+    }           
     public Bloque[][] getMatriz(){
         return matriz;
     }
@@ -89,7 +84,7 @@ public class Laberinto {
 //                    }
             }
             
-            System.out.println("no sale ");
+//            System.out.println("no sale ");
 //            break;
         }
 //        System.out.println(x+" "+y);

@@ -10,7 +10,7 @@ package Domain;
  * @author Jesus
  */
 public class Bloque {
-   public int estado;
+   private int estado;
    private int x;
    private int y;
    private int tamaño;
@@ -25,10 +25,10 @@ public class Bloque {
        this.x=x;
        this.y=y;
    }
-   void setEstado(int n){
+   public void setEstado(int n){
        this.estado=n;
    }
-   public int getEstado(){
+  public int getEstado(){
        return estado;
    }
 
