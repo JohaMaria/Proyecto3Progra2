@@ -22,11 +22,11 @@ public class FastPoke extends Player {
         this.sharedLocation = sharedLocation;
     }
 
-    public void setSprite() throws FileNotFoundException {
+   public void setSprite() throws FileNotFoundException {
         ArrayList<Image> sprite = super.getSprite();
 
-        for (int i = 1; i < 46; i++) {
-            sprite.add(new Image(new FileInputStream("src/assets/" + i + ".png")));
+        for (int i = 1; i <120; i++) {
+            sprite.add(new Image(new FileInputStream("src/assets/Fast/" + i + ".png")));
 
         }
 
@@ -43,10 +43,10 @@ public class FastPoke extends Player {
 
             try {
                 int n = move();
-                n=n+10;
+                 n=n+count;
                 charce++;
                // System.out.println(charce);
-                if(charce==15){
+                if(charce==10){
                     
                     Thread.sleep(1000);
                     charce=0;

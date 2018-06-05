@@ -30,11 +30,11 @@ public class SmartPoke extends Player{
         this.sharedLocation = sharedLocation;
     }
 
-    public void setSprite() throws FileNotFoundException {
+   public void setSprite() throws FileNotFoundException {
         ArrayList<Image> sprite = super.getSprite();
 
-        for (int i = 1; i < 46; i++) {
-            sprite.add(new Image(new FileInputStream("src/assets/" + i + ".png")));
+        for (int i = 1; i < 121; i++) {
+            sprite.add(new Image(new FileInputStream("src/assets/Smart/" + i + ".png")));
 
         }
 
@@ -51,6 +51,7 @@ public class SmartPoke extends Player{
             if(pause){
             try {
                 int n = move();
+                n=n+count;
                 
                
                

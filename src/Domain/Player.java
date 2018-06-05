@@ -117,7 +117,7 @@ public class Player extends Thread{
         gc.drawImage(image, x, y, 40, 40);
     }
     
-    public int move(){
+public int move(){
         boolean pase=true;
         boolean a=false;
         boolean b=false;
@@ -224,7 +224,7 @@ public class Player extends Thread{
                         }
                         x=30;
 //                        break;
-                        return 7;
+                        return 4;
                         
                     }else
                         break;
@@ -246,7 +246,7 @@ public class Player extends Thread{
                         }
                         x=30;
 //                        break;
-                        return 3;
+                        return 2;
                     }else
                         break;
                 
@@ -268,7 +268,7 @@ public class Player extends Thread{
                         }
                         x=30;
 //                        break;
-                        return 1;
+                        return 0;
                     }else
                         break;
 //                    
@@ -289,7 +289,7 @@ public class Player extends Thread{
                         }
                         x=30;
 //                        break;
-                        return 8;
+                        return 6;
                     }else
                         break;
             }

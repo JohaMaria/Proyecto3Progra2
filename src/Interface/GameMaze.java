@@ -31,6 +31,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -59,18 +62,18 @@ public class GameMaze extends Application implements Runnable {
     private FastPoke playerFast[];
     private SmartPoke playerSmart[];
     private FuriousPoke playerFurious[];
-    private Button btnStart, btnPause, btnStop;
+    private Button btnPlay, btnPause, btnStop,btnStart;
     Player player2, player3;
-    int quantity = 2;
+    int quantity = 5;
     int move = 1;
     int change = 0;
     private FastPoke rc;
     private SynchronizedBuffer sharedLocation;
     Item item;
     boolean aux = true;
-    private Button btnPause1;
-    private Button btnStart1;
-    private Button btnrun;
+
+    int imageNum = 0;
+    public TableView table;
 
     Image dificultImage = new Image("/assets/pause.png");
     ImageView dificultImageV = new ImageView(dificultImage);
@@ -80,6 +83,9 @@ public class GameMaze extends Application implements Runnable {
 
     Image dificultImageS = new Image("/assets/start.png");
     ImageView dificultImageVS = new ImageView(dificultImageS);
+    
+    Image dificultImageSp = new Image("/assets/stop.png");
+    ImageView dificultImageVSp = new ImageView(dificultImageSp);
 
     private Image imageB;
     private BackgroundSize backS;
@@ -134,52 +140,86 @@ public class GameMaze extends Application implements Runnable {
             this.pane.setBackground(background);
             primaryStage.setScene(this.scene);
 
-            this.btnPause1 = new Button("", dificultImageV);
-            this.btnPause1.relocate(1100, 235);
-            this.pane.getChildren().addAll(btnPause1, dificultImageV);
+            this.btnStart = new Button("", dificultImageVS);
+            this.btnStart.relocate(1050, 100);
+            this.pane.getChildren().addAll(btnStart, dificultImageVS);
+            
+            this.btnPlay = new Button("", dificultImageVP);
+            this.btnPlay.relocate(1050, 150);
+            this.pane.getChildren().addAll(btnPlay, dificultImageVP);
+            
+            this.btnPause = new Button("", dificultImageV);
+            this.btnPause.relocate(950, 150);
+            this.pane.getChildren().addAll(btnPause, dificultImageV);
 
-            this.btnStart = new Button("", dificultImageVP);
-            this.btnStart.relocate(1100, 150);
-            this.pane.getChildren().addAll(btnStart, dificultImageVP);
+            this.btnStop = new Button("", dificultImageVSp);
+            this.btnStop.relocate(1150, 150);
+            this.pane.getChildren().addAll(btnStop, dificultImageVSp);
+            
+            table = new TableView();
+            TableColumn<Player, String> nameP = new TableColumn<>("Name");
+            nameP.setCellValueFactory(new PropertyValueFactory<Player, String>("nameP"));
+            TableColumn<Player, String> nameT = new TableColumn<>("Thread");
+            nameT.setCellValueFactory(new PropertyValueFactory<Player, String>("nameThread"));
+            TableColumn<Player, String> time = new TableColumn<>("Time");
+            time.setCellValueFactory(new PropertyValueFactory<Player, String>("time"));
 
-            this.btnrun = new Button("", dificultImageVS);
-            this.btnrun.relocate(1100, 100);
-            this.pane.getChildren().addAll(btnrun, dificultImageVS);
+            table.getColumns().addAll(nameP, nameT, time);
+            this.table.relocate(1000, 400);
+            this.pane.getChildren().addAll(table);
 
-//        this.thread = new Thread(this);
-//        this.thread.start();
-//            this.btnStart.relocate(400, 1100);
-//        this.btnStart.setMinSize(75, 35);
-//        this.pane.getChildren().add(this.btnStart);
             this.pane.getChildren().add(this.canvas);
 
             primaryStage.setScene(this.scene);
 
             maze = new Maze();
-            this.playerFast = new FastPoke[quantity];
+            imageNum = 0;
+            this.playerFast = new FastPoke[4];
             for (int i = 0; i < playerFast.length; i++) {
-                this.playerFast[i] = new FastPoke(0, 80, maze.matriz, 1, sharedLocation);
-//                this.playerFast[i].start();
+                if (imageNum == 0) {
+                    this.playerFast[i] = new FastPoke(0, 80, maze.matriz, 1, sharedLocation);
+                } else {
+                    this.playerFast[i] = new FastPoke(0, 80, maze.matriz, imageNum * 8, sharedLocation);
+
+                }
+                imageNum++;
+                if (imageNum == 15) {
+                    imageNum = 0;
+                }
+
             }
-            this.playerSmart = new SmartPoke[quantity];
+            imageNum = 0;
+            this.playerSmart = new SmartPoke[5];
             for (int i = 0; i < playerSmart.length; i++) {
-                this.playerSmart[i] = new SmartPoke(0, 80, maze.matriz, 1, sharedLocation);
+                if (imageNum == 0) {
+                    this.playerSmart[i] = new SmartPoke(0, 80, maze.matriz, 1, sharedLocation);
+                } else {
+                    this.playerSmart[i] = new SmartPoke(0, 80, maze.matriz, imageNum * 8, sharedLocation);
+                }
+                imageNum++;
+                if (imageNum == 15) {
+                    imageNum = 0;
+                }
 //                this.playerSmart[i].start();
             }
-            this.playerFurious = new FuriousPoke[quantity];
+            imageNum = 0;
+            this.playerFurious = new FuriousPoke[5];
             for (int i = 0; i < playerFurious.length; i++) {
-                this.playerFurious[i] = new FuriousPoke(0, 80, maze.matriz, 1, sharedLocation);
+                if (imageNum == 0) {
+                    this.playerFurious[i] = new FuriousPoke(0, 80, maze.matriz, 1, sharedLocation);
+                } else {
+                    this.playerFurious[i] = new FuriousPoke(0, 80, maze.matriz, imageNum * 8, sharedLocation);
+                }
+                imageNum++;
+                if (imageNum == 15) {
+                    imageNum = 0;
+                }
 //                this.playerFurious[i].start();
             }
+            imageNum = 0;
             this.item = new Item(10, 4);
 
-//            this.rc = new ProRunning(0, 100, maze.matriz, 1, sharedLocation);
-//            this.rc.start();
-//        player=new Player(0,100,maze.matriz,1);
-//        player2=new Player(350, 0,maze.matriz,1);
-//        player3=new Player(0,100,maze.matriz,1);
-//        player2.cambiarImagen();
-            this.btnPause1.setOnAction(new EventHandler<ActionEvent>() {
+            this.btnPause.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
@@ -195,7 +235,7 @@ public class GameMaze extends Application implements Runnable {
                     }
                 }
             });
-            this.btnStart.setOnAction(new EventHandler<ActionEvent>() {
+            this.btnPlay.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
@@ -212,7 +252,7 @@ public class GameMaze extends Application implements Runnable {
                     }
                 }
             });
-            this.btnrun.setOnAction(new EventHandler<ActionEvent>() {
+            this.btnStart.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
@@ -230,12 +270,7 @@ public class GameMaze extends Application implements Runnable {
                     }
                 }
             });
-//        partida=new Partida();
-//        System.out.println(maze.matriz[3][2].getEstado());
-//        m=maze.getMatriz();
-//        maze.llennarMatriz();
-//        this.thread = new Thread(this);
-//        this.thread.start();
+
             this.canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
                 @Override
@@ -257,24 +292,17 @@ public class GameMaze extends Application implements Runnable {
     }
 
     private void draw(GraphicsContext gc) {
-//        partida.maze.piaintMatriz(gc);
-//        partida.player.draw(gc);
-//        play.move();
+
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, 1200, 700);
         maze.piaintMatriz(gc);
         for (int i = 0; i < playerFast.length; i++) {
             this.playerFast[i].draw(gc);
-            if (playerFurious[i].getJ() == item.getPosX() && playerFurious[i].getI() == item.getPosY()) {
-                item.setPosX(5000);
-            }
+
         }
         for (int i = 0; i < playerSmart.length; i++) {
             this.playerSmart[i].draw(gc);
-            if (playerSmart[i].getJ() == item.getPosX() && playerSmart[i].getI() == item.getPosY()) {
-                this.playerSmart[i].setSleep(300);
-                item.setPosX(5000);
-            }
+
         }
         for (int i = 0; i < playerFurious.length; i++) {
             this.playerFurious[i].draw(gc);
@@ -292,28 +320,16 @@ public class GameMaze extends Application implements Runnable {
             item.setPosX(item.getPosX() - 1);
         }
 
-//        gc.drawImage(this.rc.getImage(), this.rc.getX(), this.rc.getY());
-//       // for(int i=0;i<this.players.length;i++){
-//            
-//           //this.players[i].draw(gc); 
-////           player=players[3];
-//           player.draw(gc);
-//            player.move();
-//     //   }
-//       // player.draw(gc);
-//        player2.draw(gc);
-//        player3.draw(gc);
-////        player.start();
-//        
-//     //   player.move();
-//        player2.move();
-//        player3.move();
         try {
             Thread.sleep(150);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(GameMaze.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void runClock() {
+
     }
 
     EventHandler<WindowEvent> exit = new EventHandler<WindowEvent>() {

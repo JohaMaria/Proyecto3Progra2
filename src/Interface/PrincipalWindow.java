@@ -31,11 +31,15 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import static sun.audio.AudioPlayer.player;
 
 /**
  *
@@ -48,7 +52,7 @@ public class PrincipalWindow extends Application {
     private Canvas canvas;
     private Button btnPlayers, btnSelect, btnStart;
     private Label lblCombo, lblFast, lblFurious, lblSmart, lblNumberPlayers, lblNamePlayer;
-    private TextField tfNumberPlayers, tfNamePlayer, tfFast,tfFurious, tfSmart;
+    private TextField tfNumberPlayers, tfNamePlayer, tfFast, tfFurious, tfSmart;
 
     private ObservableList<String> listMaze;
     private ComboBox<String> combo;
@@ -57,23 +61,24 @@ public class PrincipalWindow extends Application {
     private BackgroundSize backS;
     private Background background;
     private BackgroundImage backI;
-    
+
     Image dificultImageP = new Image("/assets/play.png");
     ImageView dificultImageVP = new ImageView(dificultImageP);
-    
-     Image dificultImageS = new Image("/assets/check.png");
+
+    Image dificultImageS = new Image("/assets/check.png");
     ImageView dificultImageVS = new ImageView(dificultImageS);
-    
-     Image dificultImagePl = new Image("/assets/players.png");
+
+    Image dificultImagePl = new Image("/assets/players.png");
     ImageView dificultImageVPl = new ImageView(dificultImagePl);
     
     
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Metodo que se llama de primero en FX, se podria considerar el constructor
         primaryStage.setTitle("First Program"); //Pone un titulo a la ventana
         init(primaryStage); //inicializamos los componentes
-         primaryStage.setOnCloseRequest(exit);
+        primaryStage.setOnCloseRequest(exit);
         primaryStage.show(); //Mostramos la ventana
     }
 
@@ -85,81 +90,81 @@ public class PrincipalWindow extends Application {
 //        this.canvas = new Canvas(1200, 700);
 
         imageB = new Image("assets/fondo2.jpg");
-        backS = new BackgroundSize(2000, 1100, true, true, true, true);
+        backS = new BackgroundSize(1400, 700, true, true, true, true);
         backI = new BackgroundImage(imageB, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backS);
         background = new Background(backI);
         this.pane.setBackground(background);
         primaryStage.setScene(this.scene);
-        
+
         this.lblNumberPlayers = new Label("Number Of Players");
         lblNumberPlayers.setTextFill(Color.LAWNGREEN);
 
         this.lblNumberPlayers.relocate(100, 100);
         this.pane.getChildren().add(this.lblNumberPlayers);
-        
+
         this.tfNumberPlayers = new TextField();
         tfNumberPlayers.setEditable(true);
         this.tfNumberPlayers.relocate(225, 100);
         this.tfNumberPlayers.setMinSize(25, 10);
-        this.pane.getChildren().add(this.tfNumberPlayers);
-        
+        this.pane.getChildren().add(this.tfNumberPlayers); 
+
         this.btnPlayers = new Button("Players", dificultImageVPl);
-//        btnPlayers.setStyle("-fx-background-color: #00ff00");  button4.setStyle("-fx-text-fill: #0000ff"); letras
         this.btnPlayers.relocate(200, 150);
         this.btnPlayers.setMinSize(50, 40);
-        this.pane.getChildren().addAll(this.btnPlayers,dificultImageVPl);
-//         this.btnPlayers.setOnAction(buttonAction);
-        
+        this.pane.getChildren().addAll(this.btnPlayers, dificultImageVPl);
+
         this.lblNamePlayer = new Label("NamePlayer");
         lblNamePlayer.setTextFill(Color.LAWNGREEN);
         this.lblNamePlayer.relocate(100, 300);
         this.pane.getChildren().add(this.lblNamePlayer);
-        
+
         this.tfNamePlayer = new TextField();
+        tfNamePlayer.setEditable(true);
         this.tfNamePlayer.relocate(200, 300);
         this.tfNamePlayer.setMinSize(25, 10);
         this.pane.getChildren().add(this.tfNamePlayer);
-        
+
         this.lblFast = new Label("Fast");
         lblFast.setTextFill(Color.LAWNGREEN);
         this.lblFast.relocate(100, 350);
         this.pane.getChildren().add(this.lblFast);
-        
+
         this.tfFast = new TextField();
-        this.tfFast.relocate(100,375);
+        tfFast.setEditable(true);
+        this.tfFast.relocate(100, 375);
         this.tfFast.setMinSize(10, 10);
         this.pane.getChildren().add(this.tfFast);
-        
+
         this.lblFurious = new Label("Furious");
         lblFurious.setTextFill(Color.LAWNGREEN);
         this.lblFurious.relocate(100, 400);
         this.pane.getChildren().add(this.lblFurious);
-        
+
         this.tfFurious = new TextField();
-        this.tfFurious.relocate(100,425);
+        tfFurious.setEditable(true);
+        this.tfFurious.relocate(100, 425);
         this.tfFurious.setMinSize(10, 10);
         this.pane.getChildren().add(this.tfFurious);
-        
+
         this.lblSmart = new Label("Smart");
         lblSmart.setTextFill(Color.LAWNGREEN);
         this.lblSmart.relocate(100, 450);
         this.pane.getChildren().add(this.lblSmart);
-        
+
         this.tfSmart = new TextField();
-        this.tfSmart.relocate(100,475);
+        tfSmart.setEditable(true);
+        this.tfSmart.relocate(100, 475);
         this.tfSmart.setMinSize(10, 10);
         this.pane.getChildren().add(this.tfSmart);
-        
-        this.btnSelect = new Button("",dificultImageVS);
-//        btnSelect.setStyle("-fx-background-color: #00ff00");
+
+        this.btnSelect = new Button("", dificultImageVS);
         this.btnSelect.relocate(300, 415);
         this.btnSelect.setMinSize(75, 35);
-        this.pane.getChildren().addAll(this.btnSelect,dificultImageVS);
-        
+        this.pane.getChildren().addAll(this.btnSelect, dificultImageVS);
 
         listMaze = FXCollections.observableArrayList();
         listMaze.addAll("Laberinto1", "Laberinto2", "Laberinto3");
-        
+
         combo = new ComboBox<>(listMaze);
         StackPane pane = new StackPane(combo);
         this.combo.relocate(550, 100);
@@ -172,7 +177,6 @@ public class PrincipalWindow extends Application {
         this.pane.getChildren().add(this.lblCombo);
 
         this.btnStart = new Button("Start", dificultImageVP);
-//        btnStart.setStyle("-fx-background-color: #00ff00");
         this.btnStart.relocate(600, 400);
         this.btnStart.setMinSize(100, 50);
         this.pane.getChildren().addAll(this.btnStart, dificultImageVP);
@@ -180,7 +184,7 @@ public class PrincipalWindow extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    GameMaze laberintoGame= new GameMaze();
+                    GameMaze laberintoGame = new GameMaze();
                     laberintoGame.init(primaryStage);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PrincipalWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,19 +193,16 @@ public class PrincipalWindow extends Application {
         }
         );
 
-
         primaryStage.setScene(this.scene);
         primaryStage.setTitle("Juego");
         primaryStage.show();
     }
-    
-     EventHandler<WindowEvent> exit = new EventHandler<WindowEvent>() {
+
+    EventHandler<WindowEvent> exit = new EventHandler<WindowEvent>() {
         @Override
         public void handle(WindowEvent event) {
             System.exit(0);
         }
     };
-    
-    
 
 }

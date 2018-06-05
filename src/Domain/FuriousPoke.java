@@ -31,8 +31,8 @@ public class FuriousPoke  extends Player{
     public void setSprite() throws FileNotFoundException {
         ArrayList<Image> sprite = super.getSprite();
 
-        for (int i = 1; i < 46; i++) {
-            sprite.add(new Image(new FileInputStream("src/assets/" + i + ".png")));
+        for (int i = 1; i < 121; i++) {
+            sprite.add(new Image(new FileInputStream("src/assets/Furious/" + i + ".png")));
 
         }
 
@@ -49,7 +49,7 @@ public class FuriousPoke  extends Player{
             if(pause){
             try {
                 int n = move();
-                n=n+20;
+                n=n+count;
                
                
                
