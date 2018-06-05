@@ -6,9 +6,14 @@
 package Interface;
 
 import static java.lang.System.exit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,7 +32,10 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -49,11 +57,23 @@ public class PrincipalWindow extends Application {
     private BackgroundSize backS;
     private Background background;
     private BackgroundImage backI;
+    
+    Image dificultImageP = new Image("/assets/play.png");
+    ImageView dificultImageVP = new ImageView(dificultImageP);
+    
+     Image dificultImageS = new Image("/assets/check.png");
+    ImageView dificultImageVS = new ImageView(dificultImageS);
+    
+     Image dificultImagePl = new Image("/assets/players.png");
+    ImageView dificultImageVPl = new ImageView(dificultImagePl);
+    
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Metodo que se llama de primero en FX, se podria considerar el constructor
         primaryStage.setTitle("First Program"); //Pone un titulo a la ventana
         init(primaryStage); //inicializamos los componentes
+         primaryStage.setOnCloseRequest(exit);
         primaryStage.show(); //Mostramos la ventana
     }
 
@@ -78,15 +98,17 @@ public class PrincipalWindow extends Application {
         this.pane.getChildren().add(this.lblNumberPlayers);
         
         this.tfNumberPlayers = new TextField();
+        tfNumberPlayers.setEditable(true);
         this.tfNumberPlayers.relocate(225, 100);
         this.tfNumberPlayers.setMinSize(25, 10);
         this.pane.getChildren().add(this.tfNumberPlayers);
         
-        this.btnPlayers = new Button("Players");
+        this.btnPlayers = new Button("Players", dificultImageVPl);
 //        btnPlayers.setStyle("-fx-background-color: #00ff00");  button4.setStyle("-fx-text-fill: #0000ff"); letras
         this.btnPlayers.relocate(200, 150);
         this.btnPlayers.setMinSize(50, 40);
-        this.pane.getChildren().add(this.btnPlayers);
+        this.pane.getChildren().addAll(this.btnPlayers,dificultImageVPl);
+//         this.btnPlayers.setOnAction(buttonAction);
         
         this.lblNamePlayer = new Label("NamePlayer");
         lblNamePlayer.setTextFill(Color.LAWNGREEN);
@@ -128,11 +150,11 @@ public class PrincipalWindow extends Application {
         this.tfSmart.setMinSize(10, 10);
         this.pane.getChildren().add(this.tfSmart);
         
-        this.btnSelect = new Button("Select");
+        this.btnSelect = new Button("",dificultImageVS);
 //        btnSelect.setStyle("-fx-background-color: #00ff00");
         this.btnSelect.relocate(300, 415);
         this.btnSelect.setMinSize(75, 35);
-        this.pane.getChildren().add(this.btnSelect);
+        this.pane.getChildren().addAll(this.btnSelect,dificultImageVS);
         
 
         listMaze = FXCollections.observableArrayList();
@@ -149,16 +171,37 @@ public class PrincipalWindow extends Application {
         this.lblCombo.relocate(500, 100);
         this.pane.getChildren().add(this.lblCombo);
 
-        this.btnStart = new Button("Start");
+        this.btnStart = new Button("Start", dificultImageVP);
 //        btnStart.setStyle("-fx-background-color: #00ff00");
         this.btnStart.relocate(600, 400);
         this.btnStart.setMinSize(100, 50);
-        this.pane.getChildren().add(this.btnStart);
+        this.pane.getChildren().addAll(this.btnStart, dificultImageVP);
+        btnStart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    GameMaze laberintoGame= new GameMaze();
+                    laberintoGame.init(primaryStage);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PrincipalWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        );
 
 
         primaryStage.setScene(this.scene);
         primaryStage.setTitle("Juego");
         primaryStage.show();
     }
+    
+     EventHandler<WindowEvent> exit = new EventHandler<WindowEvent>() {
+        @Override
+        public void handle(WindowEvent event) {
+            System.exit(0);
+        }
+    };
+    
+    
 
 }

@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import Interface.JuegoLaberinto;
+import Interface.GameMaze;
 import Interface.PrincipalWindow;
 
 /**

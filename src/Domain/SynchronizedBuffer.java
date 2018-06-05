@@ -1,7 +1,7 @@
 package Domain;
 
 // SynchronizedBuffer synchronizes access to a single shared integer.
-public class SynchronizedBuffer implements Buffer
+public class SynchronizedBuffer 
 {
 
     private int buffer = -1; // shared by producer and consumer threads
@@ -89,4 +89,3 @@ public class SynchronizedBuffer implements Buffer
         return occupiedBufferCount;
     }
 } // end class SynchronizedBuffer
-
