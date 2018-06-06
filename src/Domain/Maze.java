@@ -17,26 +17,15 @@ public class Maze {
     private Block wall;
     private Block road;
     Map map;
+    int num=1;
+//    int posX=0;
+//    int posY=80;
     
-    public Maze(){
+    public Maze(int n){
 //        this.matriz=new Block[10][10];
-        map=new Map();
+        map=new Map(n);
         this.matriz=map.matriz;
-//        pared=new Block(0);
-//        camino=new Block(1);
-        
-//        for(int i=0;i<matriz.length;i++){
-//            for(int j=0;j<matriz[0].length;j++){
-//                matriz[i][j]=pared;
-//                matriz[i][j].setX(j*50);
-//                matriz[i][j].setY(i*50);
-//            }
-//        }
-//        for(int m=0;m<matriz.length;m++){
-//            matriz[3][m]=camino;
-//            matriz[3][m].setX(m*50);
-//            matriz[3][m].setY(3*50);
-//        }
+
     }
     
     public void piaintMatriz(GraphicsContext gc){
@@ -52,6 +41,10 @@ public class Maze {
                 }
                 else if(matriz[i][j].getCondition()==4){
                     gc.setFill(Color.WHITE);
+                    gc.fillRect(40*j, 40*i, 40, 40);
+                }
+                 else if(matriz[i][j].getCondition()==5){
+                    gc.setFill(Color.RED);
                     gc.fillRect(40*j, 40*i, 40, 40);
                 }
             }
@@ -92,5 +85,13 @@ public class Maze {
 //            break;
         }
 //        System.out.println(x+" "+y);
+    }
+    
+    public int getX(){
+        return map.posX();
+    }
+    
+    public int posY(){
+        return map.posY();
     }
 }

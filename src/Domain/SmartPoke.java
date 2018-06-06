@@ -6,6 +6,7 @@
 package Domain;
 
 //import juegolaberinto.*;
+import Interface.GameMaze;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -23,14 +24,16 @@ public class SmartPoke extends Player{
     private Image image;
     GraphicsContext gc;
     int sleep=600;
-    public SmartPoke(int x, int y, Block[][] matriz, int count, SynchronizedBuffer sharedLocation) throws FileNotFoundException {
-        super(x, y, matriz, count);
+    String time;
+    GameMaze gM;
+    public SmartPoke(int x, int y, Block[][] matriz, int count, SynchronizedBuffer sharedLocation,String namePlayer,String type) throws FileNotFoundException {
+        super(x, y, matriz, count,namePlayer,type);
         setSprite();
 
         this.sharedLocation = sharedLocation;
     }
 
-   public void setSprite() throws FileNotFoundException {
+    public void setSprite() throws FileNotFoundException {
         ArrayList<Image> sprite = super.getSprite();
 
         for (int i = 1; i < 121; i++) {
@@ -73,6 +76,8 @@ public class SmartPoke extends Player{
                 }
             }
         }
+//        time=gM.timeReturn();
+        sharedLocation.set(namePlayer, type);
     }
     
     public int getSleep(){

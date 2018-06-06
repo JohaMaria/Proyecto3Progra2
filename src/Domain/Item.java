@@ -24,7 +24,7 @@ public class Item {
         this.posX=posX;
         this.posY=posY;
         try {
-            this.image=new Image(new FileInputStream("src/assets/item1.png"));
+            this.image=new Image(new FileInputStream("src/assets/11.png"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
         }

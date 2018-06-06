@@ -1,5 +1,6 @@
 package Domain;
 
+import Interface.GameMaze;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,16 +14,18 @@ public class FastPoke extends Player {
     SynchronizedBuffer sharedLocation;
     private Image image;
     GraphicsContext gc;
+    String time;
+    GameMaze gM;
     
 
-    public FastPoke(int x, int y, Block[][] matriz, int count, SynchronizedBuffer sharedLocation) throws FileNotFoundException {
-        super(x, y, matriz, count);
+    public FastPoke(int x, int y, Block[][] matriz, int count, SynchronizedBuffer sharedLocation,String namePlayer,String type) throws FileNotFoundException {
+        super(x, y, matriz, count,namePlayer,type);
         setSprite();
 
         this.sharedLocation = sharedLocation;
     }
 
-   public void setSprite() throws FileNotFoundException {
+    public void setSprite() throws FileNotFoundException {
         ArrayList<Image> sprite = super.getSprite();
 
         for (int i = 1; i <120; i++) {
@@ -70,5 +73,8 @@ public class FastPoke extends Player {
                 
             
         }
+        //time=gM.timeReturn();
+        sharedLocation.set(namePlayer, type);
+        
     }
 }

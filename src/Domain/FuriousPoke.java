@@ -5,6 +5,7 @@
  */
 package Domain;
 
+import Interface.GameMaze;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -21,8 +22,11 @@ public class FuriousPoke  extends Player{
     SynchronizedBuffer sharedLocation;
     private Image image;
     GraphicsContext gc;
-    public FuriousPoke(int x, int y, Block[][] matriz, int count, SynchronizedBuffer sharedLocation) throws FileNotFoundException {
-        super(x, y, matriz, count);
+    String time;
+    GameMaze gM;
+    public FuriousPoke(int x, int y, Block[][] matriz, int count
+            , SynchronizedBuffer sharedLocation,String namePlayer,String type) throws FileNotFoundException {
+        super(x, y, matriz, count,namePlayer,type);
         setSprite();
 
         this.sharedLocation = sharedLocation;
@@ -70,5 +74,8 @@ public class FuriousPoke  extends Player{
                 }
             }
         }
+//       time=gM.timeReturn();
+        //System.out.println(time);
+        sharedLocation.set(namePlayer, type);
     }
 }

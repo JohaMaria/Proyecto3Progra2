@@ -24,6 +24,8 @@ public class Player extends Thread{
     public int i,j;
     int previousI=0;
     int previousJ=0;
+    public String namePlayer;
+    public String type;
     Block[][] matriz;
     boolean collision=false;
     boolean collision2=false;
@@ -42,11 +44,13 @@ public class Player extends Thread{
             this.j=0;
             this.count=0;
             this.noGain=true;
+            this.namePlayer="";
+            this.type="";
       
     
     }
     
-    public Player(int x,int y,Block[][] m,int count){
+    public Player(int x,int y,Block[][] m,int count,String namePlayer,String type){
         this.sprite = new ArrayList<Image>();
         this.x=x;
         this.y=y;
@@ -55,6 +59,24 @@ public class Player extends Thread{
         this.matriz=m;
         this.count=count;
         this.noGain=true;
+        this.namePlayer=namePlayer;
+        this.type=type;
+    }
+
+    public String getNamePlayer() {
+        return namePlayer;
+    }
+
+    public void setNamePlayer(String namePlayer) {
+        this.namePlayer = namePlayer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getX() {
@@ -113,11 +135,19 @@ public class Player extends Thread{
         this.count = count;
     }
     
+    public void setMatriz(Block[][] m){
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[0].length;j++){
+                matriz[i][j]=m[i][j];
+            }
+        }
+    }
+    
     public void draw(GraphicsContext gc){
         gc.drawImage(image, x, y, 40, 40);
     }
     
-public int move(){
+    public int move(){
         boolean pase=true;
         boolean a=false;
         boolean b=false;
@@ -297,13 +327,7 @@ public int move(){
         return 0;
     }
     
-    public void cambiarImagen(){
-            try {
-                this.image=new Image(new FileInputStream("src/assets/carrito.png"));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
+    
     
     public boolean choque(int i,int j){
         if(j<19&&matriz[i][j+1].getCondition()==3)

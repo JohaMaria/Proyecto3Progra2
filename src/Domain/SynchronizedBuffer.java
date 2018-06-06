@@ -1,91 +1,29 @@
 package Domain;
 
 // SynchronizedBuffer synchronizes access to a single shared integer.
-public class SynchronizedBuffer 
-{
 
-    private int buffer = -1; // shared by producer and consumer threads
-    private int occupiedBufferCount = 0; // count of occupied buffers
+import Interface.GameMaze;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-    // place value into buffer
-    public synchronized void set(int value)
-    {
-        // for output purposes, get name of thread that called this method
-        String name = Thread.currentThread().getName();
+public class SynchronizedBuffer {
 
-        // while there are no empty locations, place thread in waiting state
-        while (occupiedBufferCount == 1)
-        {
+    private ObservableList<Winner> winnerT = FXCollections.observableArrayList();
 
-            // output thread information and buffer information, then wait
-            try
-            {
-              
+    public synchronized void set(String namePlayer, String type) {
+        Winner exp = new Winner();
+        System.out.println(namePlayer);
+        exp.setNamePlayer(namePlayer);
+        exp.setType(type);
+        exp.setTime(GameMaze.timer);
 
-                //this thread waits
-                wait();
+        winnerT.add(exp);
 
-            } // if waiting thread interrupted, print stack trace
-            catch (InterruptedException exception)
-            {
-                exception.printStackTrace();
-            }
-
-        } // end while
-
-        //if arrive to this place, it means that buffer is empty
-        buffer = value; // set new buffer value
-
-        // indicate producer cannot store another value
-        // until consumer retrieves current buffer value
-        ++occupiedBufferCount;
-
-       
-
-        notify(); // tell waiting thread to enter ready state
-
-    } // end method set; releases lock on SynchronizedBuffer
-
-    
-    // return value from buffer
-    public synchronized int get()
-    {
-        // for output purposes, get name of thread that called this method
-        String name = Thread.currentThread().getName();
-
-        // while no data to read, place thread in waiting state
-        while (occupiedBufferCount == 0)
-        {
-
-            // output thread information and buffer information, then wait
-            try
-            {
-                
-                wait();
-            } // if waiting thread interrupted, print stack trace
-            catch (InterruptedException exception)
-            {
-                exception.printStackTrace();
-            }
-
-        } // end while
-
-        // indicate that producer can store another value
-        // because consumer just retrieved buffer value
-        --occupiedBufferCount;
-
-        
-
-        notify(); // tell waiting thread to become ready to execute
-
-        return buffer;
-
-    } // end method get; releases lock on SynchronizedBuffer
-
-
-    // display current operation and buffer state
-    
-    public int ball(){
-        return occupiedBufferCount;
     }
+
+    public synchronized ObservableList<Winner> get() {
+
+        return winnerT;
+    }
+
 } // end class SynchronizedBuffer
